@@ -81,21 +81,34 @@ h1 {
   font-size: 13px;
   color: var(--muted);
 }
-#debug {
+#test-panel {
   position: fixed;
-  left: 8px;
-  right: 8px;
-  bottom: 8px;
-  margin: 0;
+  z-index: 10;
+  left: 6px;
+  right: 6px;
+  top: 6px;
   padding: 8px;
-  max-height: 40vh;
-  overflow: auto;
-  font: 11px/1.4 ui-monospace, monospace;
-  text-align: left;
-  white-space: pre-wrap;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.82);
   color: #fff;
-  background: rgba(0, 0, 0, 0.8);
-  border-radius: 8px;
+  text-align: left;
+  font: 11px/1.35 ui-monospace, Menlo, monospace;
+}
+#test-panel p { margin: 0 0 6px; color: #ffd27a; }
+#test-panel div { display: flex; flex-wrap: wrap; gap: 5px; }
+#test-panel button {
+  padding: 7px 8px;
+  border: 1px solid #666;
+  border-radius: 6px;
+  background: #222;
+  color: #fff;
+  font: inherit;
+}
+#test-log {
+  margin: 6px 0 0;
+  max-height: 32vh;
+  overflow: auto;
+  white-space: pre-wrap;
 }
 @keyframes flicker {
   0%, 100% { opacity: 0.85; transform: scale(1); }

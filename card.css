@@ -55,3 +55,14 @@ h1 {
   .what { font-size: 13px; margin-top: 6px; }
   .badge { margin-top: 14px; width: min(230px, 66vw); }
 }
+@media (max-height: 680px) {
+  .art { aspect-ratio: 1024 / 300; }
+  h1 { font-size: 34px; }
+  .open { margin-top: 8px; font-size: 14px; }
+  .card { margin-top: 12px; padding: 4px 16px 14px; }
+  .card .glow { width: 100px; height: 100px; }
+  .headline { font-size: 17px; }
+  .what { font-size: 12.5px; margin-top: 4px; }
+  .badge { margin-top: 10px; width: min(210px, 60vw); }
+  .escape { margin-top: 16px; }
+}
