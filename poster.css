@@ -155,13 +155,22 @@ h1 {
 .escape a { color: var(--soft); font-weight: 500; }
 .privacy {
   position: absolute;
-  right: 12px;
-  bottom: max(6px, env(safe-area-inset-bottom));
-  padding: 6px 4px;
-  font-size: 10.5px;
+  right: 4px;
+  bottom: max(0px, calc(env(safe-area-inset-bottom) - 6px));
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
   color: var(--faint);
-  text-decoration: none;
   -webkit-tap-highlight-color: transparent;
+}
+.privacy svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linejoin: round;
 }
 @media (min-width: 560px) {
   body::before {
