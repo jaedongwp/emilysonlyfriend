@@ -180,37 +180,9 @@ function texture(unit, image) {
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
 }
 
-const bulb = {
-  nextStutterAt: 3.2,
-  dips: [],
-
-  levelAt(seconds) {
-    if (seconds >= this.nextStutterAt) this.stutter(seconds);
-    const breathing = 0.97 + 0.03 * Math.sin(seconds * 1.7) * Math.sin(seconds * 0.63);
-    return this.dips.reduce((level, dip) => level * (1 - dip.depth * this.shapeOf(dip, seconds)), breathing);
-  },
-
-  stutter(seconds) {
-    const blacksOut = Math.random() < 0.3;
-    const count = blacksOut ? 2 : 2 + Math.floor(Math.random() * 2);
-    this.dips = Array.from({ length: count }, (_, index) => ({
-      at: seconds + index * (0.12 + Math.random() * 0.1),
-      depth: 0.45 + Math.random() * 0.4,
-      lasts: 0.05 + Math.random() * 0.07,
-      recovers: 0.03,
-    }));
-    if (blacksOut) this.dips.push({ at: seconds + 0.5, depth: 1, lasts: 0.28, recovers: 0.35 });
-    this.nextStutterAt = seconds + 8 + Math.random() * 6;
-  },
-
-  shapeOf(dip, seconds) {
-    const since = seconds - dip.at;
-    if (since < 0) return 0;
-    if (since < 0.03) return since / 0.03;
-    if (since < dip.lasts) return 1;
-    return Math.max(0, 1 - (since - dip.lasts) / dip.recovers);
-  },
-};
+function breathingAt(seconds) {
+  return 0.97 + 0.03 * Math.sin(seconds * 1.7) * Math.sin(seconds * 0.63);
+}
 
 function fitTheBuffer(cover) {
   canvas.width = Math.max(1, Math.round(canvas.clientWidth * bufferScale));
@@ -244,7 +216,7 @@ function start(program) {
     const seconds = (now - startedAt) / 1000;
     gl.uniform2f(bufferSize, canvas.width, canvas.height);
     gl.uniform1f(time, seconds + 40);
-    gl.uniform1f(level, isStill ? 1 : bulb.levelAt(seconds));
+    gl.uniform1f(level, isStill ? 1 : breathingAt(seconds));
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   };
   const drawEveryFrame = (now) => {
