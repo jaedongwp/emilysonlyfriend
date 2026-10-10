@@ -14,7 +14,8 @@
 <link rel="preload" as="font" type="font/woff2" href="fonts/montserrat-latin.woff2?v=3" crossorigin>
 <link rel="preload" as="image" href="poster.jpg?v=3">
 <link rel="stylesheet" href="base.css?v=3">
-<link rel="stylesheet" href="poster.css?v=6">
+<link rel="stylesheet" href="poster.css?v=8">
+<script src="bridge.js?v=6" data-tap-anywhere data-count></script>
 </head>
 <body>
 <main>
@@ -36,10 +37,24 @@
     </a>
     <p class="android-only" id="android-only">For Android</p>
     <p class="escape" id="escape">Not opening? <a id="chrome" href="#">Open in Chrome</a></p>
+    <div class="iphone" id="iphone">
+      <p class="not-yet">For now, it's just on Android.</p>
+      <button class="button share" id="share" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 14.5V3.5M8.2 7.2L12 3.4l3.8 3.8M8.5 10.5H6.8a1.3 1.3 0 0 0-1.3 1.3v7.4a1.3 1.3 0 0 0 1.3 1.3h10.4a1.3 1.3 0 0 0 1.3-1.3v-7.4a1.3 1.3 0 0 0-1.3-1.3h-1.7"/></svg>
+        <span class="label">Send it to a friend with Android</span><span class="done">Link copied</span>
+      </button>
+      <a class="button trailer" data-counted-as="trailer" href="https://www.youtube.com/watch?v=FcCNJ-DDjCw" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path class="solid" d="M8.5 5.8v12.4L18.6 12z"/></svg>
+        Watch the trailer
+      </a>
+      <p class="follow">Follow
+        <a data-counted-as="follow-instagram" href="https://www.instagram.com/emilysonlyfriend/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.9"/><circle class="solid" cx="17.1" cy="6.9" r="1"/></svg></a>
+        <a data-counted-as="follow-youtube" href="https://www.youtube.com/@EmilysOnlyFriend" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.1 7.6a2.5 2.5 0 0 0-1.8-1.8C17.7 5.4 12 5.4 12 5.4s-5.7 0-7.3.4a2.5 2.5 0 0 0-1.8 1.8C2.5 9.2 2.5 12 2.5 12s0 2.8.4 4.4a2.5 2.5 0 0 0 1.8 1.8c1.6.4 7.3.4 7.3.4s5.7 0 7.3-.4a2.5 2.5 0 0 0 1.8-1.8c.4-1.6.4-4.4.4-4.4s0-2.8-.4-4.4z"/><path class="solid" d="M10.2 14.9l4.9-2.9-4.9-2.9z"/></svg></a>
+      </p>
+    </div>
   </section>
   <a class="privacy" href="privacy/" aria-label="Privacy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 9.5-4-1.2-7-5-7-9.5V6l7-3z"/></svg></a>
 </main>
-<script src="bridge.js?v=5" data-tap-anywhere data-count></script>
 <script src="poster.js?v=4" defer></script>
 </body>
 </html>

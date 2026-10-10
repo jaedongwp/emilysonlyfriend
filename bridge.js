@@ -29,6 +29,7 @@ const tapAddress = isAndroid && isInAppBrowser ? playAppIntent : storeAddress;
 const isTesting = bridgeScript.hasAttribute("data-test-panel") || page.has("debug");
 const isCounting = bridgeScript.hasAttribute("data-count") && !isTesting && !page.has("dry");
 const platform = isAndroid ? "android" : isApple ? "iphone" : "other";
+document.documentElement.dataset.platform = platform;
 const logKey = "bridge-log";
 const autoTriedKey = "bridge-auto-tried";
 
@@ -65,6 +66,15 @@ function startCounting() {
 
 function count(action) {
   if (isCounting && window.goatcounter.count) window.goatcounter.count({ path: action + "-" + source + "-" + platform, event: true });
+}
+
+function countTapsOnMarkedLinks() {
+  document.querySelectorAll("[data-counted-as]").forEach((link) => {
+    link.addEventListener("click", () => {
+      note("tap on " + link.dataset.countedAs);
+      count(link.dataset.countedAs);
+    });
+  });
 }
 
 function whenReady(then) {
@@ -162,6 +172,41 @@ function showPlatformLines() {
   }
 }
 
+function showCopied(button) {
+  button.classList.add("copied");
+  setTimeout(() => button.classList.remove("copied"), 2600);
+}
+
+async function sendToAFriend(button) {
+  const link = location.protocol + "//" + thisPageAddress;
+  note("tap on Send to a friend: " + link);
+  count("share");
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: document.title, url: link });
+      note("shared");
+      count("shared");
+    } catch (error) {
+      note("share sheet closed: " + error.name);
+    }
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(link);
+    note("no share sheet, link copied");
+    showCopied(button);
+  } catch {
+    note("no share sheet, no clipboard: Messages");
+    if (!page.has("dry")) location.href = "sms:&body=" + encodeURIComponent(link);
+  }
+}
+
+function offerTheIphoneWay() {
+  const share = document.getElementById("share");
+  share.addEventListener("click", () => sendToAFriend(share));
+  countTapsOnMarkedLinks();
+}
+
 function showLog() {
   const log = document.getElementById("test-log");
   if (!log) return;
@@ -209,9 +254,14 @@ if (isTesting) {
 }
 
 whenReady(() => {
-  wireStoreLinks();
-  showPlatformLines();
-  if (bridgeScript.hasAttribute("data-tap-anywhere")) openPlayOnAnyTap();
+  const hasIphoneWay = document.getElementById("iphone") !== null;
+  if (isApple && hasIphoneWay) {
+    offerTheIphoneWay();
+  } else {
+    wireStoreLinks();
+    showPlatformLines();
+    if (bridgeScript.hasAttribute("data-tap-anywhere")) openPlayOnAnyTap();
+  }
   if (isTesting) buildTestPanel();
 });
 

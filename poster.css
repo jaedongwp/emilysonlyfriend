@@ -17,6 +17,7 @@
   --faint: rgba(233, 236, 245, 0.5);
   --ember: #f2b05e;
   --rise: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --surface: cubic-bezier(0.16, 1, 0.3, 1);
 }
 body {
   background: var(--night);
@@ -35,7 +36,7 @@ main {
   position: relative;
   min-height: 100vh;
   min-height: 100dvh;
-  padding: 0 0 max(18px, env(safe-area-inset-bottom));
+  padding: 0 0 max(30px, calc(env(safe-area-inset-bottom) + 22px));
 }
 .art {
   position: relative;
@@ -97,11 +98,9 @@ h1 {
   margin-top: clamp(-70px, -5dvh, -24px);
   padding: 0 20px;
 }
-.pitch > * { animation: rise 0.9s var(--rise) both; }
-.pitch > :nth-child(1) { animation-delay: 0.12s; }
-.pitch > :nth-child(2) { animation-delay: 0.22s; }
-.pitch > :nth-child(3) { animation-delay: 0.32s; }
-.pitch > :nth-child(n+4) { animation-delay: 0.42s; }
+.pitch > *,
+.iphone > * { animation: surface 1.3s var(--surface) backwards; }
+.pitch > .iphone { animation: none; }
 .logline {
   max-width: 28ch;
   margin: 0 auto;
@@ -110,6 +109,27 @@ h1 {
   line-height: 1.5;
   color: var(--soft);
   text-wrap: balance;
+  -webkit-mask: linear-gradient(100deg, #000 40%, transparent 60%) 0 0 / 300% 100% no-repeat;
+  mask: linear-gradient(100deg, #000 40%, transparent 60%) 0 0 / 300% 100% no-repeat;
+  animation: surface 1.3s var(--surface) 0.3s backwards, dawn 2s cubic-bezier(0.45, 0, 0.2, 1) 0.3s backwards;
+}
+.gift, .not-yet { animation-delay: 0.8s; }
+.badge, .share { animation-delay: 1.05s; }
+.trailer { animation-delay: 1.2s; }
+.android-only, .escape, .follow { animation-delay: 1.35s; }
+.badge::after,
+.share::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 38%, rgba(255, 246, 228, 0.75) 50%, transparent 62%) 100% 0 / 300% 100% no-repeat;
+  animation: glint 1.2s cubic-bezier(0.45, 0, 0.25, 1) 2.3s both;
+}
+.badge::after {
+  mix-blend-mode: screen;
+  -webkit-mask: url("badge-preregister.png?v=3") center / 100% 100% no-repeat;
+  mask: url("badge-preregister.png?v=3") center / 100% 100% no-repeat;
 }
 .gift {
   display: flex;
@@ -124,6 +144,7 @@ h1 {
   width: auto;
   height: clamp(52px, 8.4dvh, 76px);
   filter: drop-shadow(0 0 14px rgba(242, 176, 94, 0.32));
+  animation: kindle 1.8s ease-out 1s backwards;
 }
 .gift p {
   margin: 0;
@@ -139,11 +160,11 @@ h1 {
   white-space: nowrap;
 }
 .badge {
-  width: min(262px, 70vw, 31dvh);
+  width: min(232px, 62vw, 27dvh);
   margin: clamp(16px, 3.6dvh, 34px) auto 0;
-  filter: drop-shadow(0 8px 22px rgba(0, 0, 0, 0.55));
   transition: transform 0.18s ease;
 }
+.badge img { filter: drop-shadow(0 8px 22px rgba(0, 0, 0, 0.55)); }
 .badge::before { display: none; }
 .badge:active { transform: scale(0.97); }
 .badge:active img { transform: none; }
@@ -153,10 +174,95 @@ h1 {
 }
 .escape { margin-top: clamp(12px, 2.6dvh, 24px); }
 .escape a { color: var(--soft); font-weight: 500; }
+.iphone { display: none; }
+[data-platform="iphone"] .gift,
+[data-platform="iphone"] .badge { display: none; }
+[data-platform="iphone"] .iphone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: min(316px, 88vw);
+  margin: clamp(16px, 3.8dvh, 38px) auto 0;
+}
+.not-yet {
+  margin: 0 0 4px;
+  font-size: clamp(14px, 2.2dvh, 17px);
+  font-weight: 600;
+  color: var(--ember);
+}
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  min-height: 46px;
+  padding: 0 14px;
+  border-radius: 999px;
+  font: 600 14px/1.2 Montserrat, system-ui, sans-serif;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.18s ease;
+}
+.button:active { transform: scale(0.97); }
+.button svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+.share {
+  position: relative;
+  overflow: hidden;
+  border: 0;
+  background: var(--cream);
+  color: var(--night);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.55), 0 0 30px rgba(242, 176, 94, 0.2);
+}
+.share .done,
+.share.copied .label { display: none; }
+.share.copied .done { display: inline; }
+.trailer {
+  border: 1px solid rgba(243, 230, 200, 0.4);
+  background: rgba(3, 5, 15, 0.35);
+  color: var(--cream);
+}
+.follow {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin: 2px 0 0;
+  font-size: 12.5px;
+  color: var(--faint);
+}
+.follow a {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  color: var(--soft);
+  -webkit-tap-highlight-color: transparent;
+}
+.follow a:first-of-type { margin-left: 4px; }
+.iphone svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.iphone svg .solid {
+  fill: currentColor;
+  stroke: none;
+}
+.follow svg {
+  width: 21px;
+  height: 21px;
+}
 .privacy {
   position: absolute;
   right: 4px;
-  bottom: max(0px, calc(env(safe-area-inset-bottom) - 6px));
+  bottom: max(20px, calc(env(safe-area-inset-bottom) + 12px));
   display: grid;
   place-items: center;
   width: 36px;
@@ -192,6 +298,23 @@ h1 {
   12% { opacity: 1; }
   to { transform: scale(var(--zoomed)); opacity: 1; }
 }
+@keyframes surface {
+  from { opacity: 0; transform: translateY(28px); filter: blur(10px); }
+  to { opacity: 1; transform: none; filter: blur(0); }
+}
+@keyframes dawn {
+  from { -webkit-mask-position: 100% 0; mask-position: 100% 0; }
+  to { -webkit-mask-position: 0 0; mask-position: 0 0; }
+}
+@keyframes kindle {
+  from { filter: drop-shadow(0 0 0 rgba(242, 176, 94, 0)) brightness(0.55); }
+  45% { filter: drop-shadow(0 0 26px rgba(242, 176, 94, 0.75)) brightness(1.15); }
+  to { filter: drop-shadow(0 0 14px rgba(242, 176, 94, 0.32)) brightness(1); }
+}
+@keyframes glint {
+  from { background-position: 100% 0; }
+  to { background-position: 0 0; }
+}
 @keyframes rise {
   from { transform: translateY(14px); opacity: 0; }
   to { transform: none; opacity: 1; }
@@ -200,6 +323,6 @@ h1 {
   .scene { --zoomed: 1.2; }
 }
 @media (prefers-reduced-motion: reduce) {
-  h1, .pitch > * { animation: none; }
+  h1, .pitch > *, .iphone > *, .gift img, .badge::after, .share::after { animation: none; }
   .scene { animation: none; transform: scale(var(--zoomed)); }
 }
