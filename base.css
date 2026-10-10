@@ -1,0 +1,113 @@
+:root {
+  --navy: #0b1230;
+  --navy-deep: #050817;
+  --cream: #f3e6c8;
+  --text: #e9ecf5;
+  --muted: #9aa3bf;
+  --amber: #f2a53f;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: radial-gradient(120% 80% at 50% 30%, #16204a 0%, var(--navy) 45%, var(--navy-deep) 100%);
+  background-color: var(--navy-deep);
+  color: var(--text);
+  font-family: Montserrat, system-ui, sans-serif;
+  display: flex;
+  justify-content: center;
+}
+main {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+h1 {
+  font-family: Kalam, cursive;
+  font-weight: 700;
+  line-height: 1.02;
+  color: var(--cream);
+}
+.badge {
+  position: relative;
+  display: block;
+  margin: 20px auto 0;
+  width: min(260px, 72vw);
+  -webkit-tap-highlight-color: transparent;
+}
+.badge::before {
+  content: "";
+  position: absolute;
+  inset: -10px -14px;
+  border-radius: 22px;
+  background: radial-gradient(closest-side, rgba(242, 165, 63, 0.45), transparent);
+  animation: breathe 2.8s ease-in-out infinite;
+}
+.badge img { position: relative; display: block; width: 100%; height: auto; }
+.badge:active img { transform: scale(0.97); }
+.glow { position: relative; }
+.glow::before {
+  content: "";
+  position: absolute;
+  inset: -18%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 190, 90, 0.38) 0%, rgba(255, 160, 60, 0.12) 40%, transparent 68%);
+  animation: flicker 4.2s ease-in-out infinite;
+}
+.glow img {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  -webkit-mask-image: radial-gradient(circle, #000 52%, transparent 71%);
+  mask-image: radial-gradient(circle, #000 52%, transparent 71%);
+}
+.escape {
+  display: none;
+  margin: 18px 16px 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+.escape a { color: var(--text); font-weight: 600; }
+.escape.loud { color: var(--text); font-size: 16px; }
+.android-only, .leaving {
+  display: none;
+  margin: 14px 16px 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+#debug {
+  position: fixed;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  margin: 0;
+  padding: 8px;
+  max-height: 40vh;
+  overflow: auto;
+  font: 11px/1.4 ui-monospace, monospace;
+  text-align: left;
+  white-space: pre-wrap;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 8px;
+}
+@keyframes flicker {
+  0%, 100% { opacity: 0.85; transform: scale(1); }
+  20% { opacity: 1; transform: scale(1.03); }
+  35% { opacity: 0.78; }
+  55% { opacity: 0.95; transform: scale(1.01); }
+  75% { opacity: 0.82; }
+}
+@keyframes breathe {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.9; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .glow::before, .badge::before { animation: none; }
+}

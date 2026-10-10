@@ -1,0 +1,57 @@
+main { padding: 0 0 40px; }
+.art {
+  width: 100%;
+  aspect-ratio: 1024 / 500;
+  background: url("window.jpg") center / cover no-repeat;
+  -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+}
+h1 {
+  margin: 4px 16px 0;
+  font-size: clamp(42px, 13vw, 58px);
+}
+.open {
+  margin: 18px 16px 0;
+  font-size: 17px;
+  font-weight: 500;
+}
+.card {
+  position: relative;
+  margin: 22px 16px 0;
+  width: calc(100% - 32px);
+  padding: 6px 20px 24px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(242, 165, 63, 0.10) 0%, rgba(20, 28, 66, 0.55) 55%, rgba(8, 12, 32, 0.6) 100%);
+  border: 1px solid rgba(242, 165, 63, 0.28);
+  box-shadow: 0 0 60px rgba(242, 165, 63, 0.10), inset 0 1px 0 rgba(255, 220, 160, 0.10);
+}
+.card .glow {
+  width: 168px;
+  height: 168px;
+  margin: 0 auto;
+}
+.headline {
+  margin: 2px 0 0;
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.headline span { color: var(--amber); }
+.what {
+  margin: 10px auto 0;
+  max-width: 300px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.escape { margin-top: 30px; }
+@media (max-height: 780px) {
+  .art { aspect-ratio: 1024 / 420; }
+  h1 { font-size: 40px; }
+  .open { margin-top: 12px; font-size: 15px; }
+  .card { margin-top: 16px; padding-bottom: 18px; }
+  .card .glow { width: 128px; height: 128px; }
+  .headline { font-size: 19px; }
+  .what { font-size: 13px; margin-top: 6px; }
+  .badge { margin-top: 14px; width: min(230px, 66vw); }
+}
