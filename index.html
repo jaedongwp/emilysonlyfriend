@@ -8,30 +8,37 @@
 <meta property="og:title" content="Emily's Only Friend">
 <meta property="og:description" content="Now open for pre-registration on Google Play.">
 <meta property="og:image" content="https://emilysonlyfriend.com/window.jpg">
-<meta name="theme-color" content="#0b1230">
+<meta name="theme-color" content="#03050f">
 <link rel="icon" href="icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@700&family=Montserrat:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="base.css">
-<link rel="stylesheet" href="card.css">
+<link rel="preload" as="font" type="font/woff2" href="fonts/kalam-700-latin.woff2?v=3" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="fonts/montserrat-latin.woff2?v=3" crossorigin>
+<link rel="preload" as="image" href="poster.jpg?v=3">
+<link rel="stylesheet" href="base.css?v=3">
+<link rel="stylesheet" href="poster.css?v=3">
 </head>
 <body>
 <main>
-  <div class="art" role="img" aria-label="A girl in a red coat looks up at a lit window of a dark building"></div>
-  <h1>Emily's<br>Only Friend</h1>
-  <p class="open">Now open for pre-registration</p>
-  <section class="card">
-    <div class="glow"><img src="gift.jpg" alt="A gift wrapped in dark blue star paper, its lid lifted, warm light glowing inside"></div>
-    <p class="headline">A gift is waiting<br><span>for you inside.</span></p>
-    <p class="what">Pre-register now and it's yours the day the game comes out.</p>
+  <h1>Emily's Only Friend</h1>
+  <div class="art">
+    <div class="scene">
+      <img src="poster.jpg?v=3" alt="A girl in a red coat stands alone in the light of one window of a dark building at night">
+      <canvas class="light" aria-hidden="true"></canvas>
+    </div>
+  </div>
+  <section class="pitch">
+    <p class="logline">She's trapped, with only one way out: a voice she comes to doubt.</p>
+    <div class="gift">
+      <img src="gift-icon.png?v=3" alt="A gift wrapped in dark blue star paper, warm light glowing from under its lid">
+      <p><strong>A gift is waiting for you inside.</strong>Pre-register now and it's yours the day the game comes out.</p>
+    </div>
     <a class="badge" id="play" data-play href="https://play.google.com/store/apps/details?id=com.onepunchapp.girlpuzzle">
-      <img src="badge-preregister.png" alt="Pre-register on Google Play">
+      <img src="badge-preregister.png?v=3" alt="Pre-register on Google Play">
     </a>
     <p class="android-only" id="android-only">For Android</p>
+    <p class="escape" id="escape">Not opening? <a id="chrome" href="#">Open in Chrome</a></p>
   </section>
-  <p class="escape" id="escape">Not opening? <a id="chrome" href="#">Open in Chrome</a></p>
 </main>
-<script src="bridge.js" data-tap-anywhere></script>
+<script src="bridge.js?v=3" data-tap-anywhere></script>
+<script src="poster.js?v=4" defer></script>
 </body>
 </html>
