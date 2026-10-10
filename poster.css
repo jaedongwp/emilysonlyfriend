@@ -153,6 +153,16 @@ h1 {
 }
 .escape { margin-top: clamp(12px, 2.6dvh, 24px); }
 .escape a { color: var(--soft); font-weight: 500; }
+.privacy {
+  position: absolute;
+  right: 12px;
+  bottom: max(6px, env(safe-area-inset-bottom));
+  padding: 6px 4px;
+  font-size: 10.5px;
+  color: var(--faint);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
 @media (min-width: 560px) {
   body::before {
     content: "";

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Privacy · Emily's Only Friend</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#03050f">
+<link rel="icon" href="../icon.png">
+<link rel="stylesheet" href="../base.css?v=3">
+<style>
+@font-face {
+  font-family: Kalam;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/kalam-700-latin.woff2?v=3") format("woff2");
+}
+@font-face {
+  font-family: Montserrat;
+  font-weight: 500 600;
+  font-display: swap;
+  src: url("../fonts/montserrat-latin.woff2?v=3") format("woff2");
+}
+body { background: #03050f; }
+main {
+  max-width: 30rem;
+  padding: 40px 24px max(32px, env(safe-area-inset-bottom));
+  text-align: left;
+  align-items: stretch;
+}
+h1 { margin: 0 0 20px; font-size: 26px; }
+p {
+  margin: 0 0 16px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: rgba(233, 236, 245, 0.74);
+}
+a { color: #f3e6c8; }
+button {
+  align-self: flex-start;
+  margin: 8px 0 16px;
+  padding: 11px 18px;
+  border: 1px solid rgba(243, 230, 200, 0.4);
+  border-radius: 10px;
+  background: transparent;
+  color: #f3e6c8;
+  font: 600 14px Montserrat, system-ui, sans-serif;
+}
+button:disabled { opacity: 0.5; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Privacy</h1>
+  <p>This page counts how many people visit it and how many tap through to Google Play, so we know which of our posts bring people here.</p>
+  <p>The counting is done by <a href="https://www.goatcounter.com">GoatCounter</a>, run from Ireland. It sets no cookies and never stores your IP address. What it keeps: the page, the link you came from, and your country, browser and screen size.</p>
+  <button id="skip" type="button">Don't count me</button>
+  <p><a href="../">Back to the game</a></p>
+</main>
+<script>
+const skip = document.getElementById("skip");
+const markSkipped = () => {
+  skip.textContent = "Done. This browser won't be counted.";
+  skip.disabled = true;
+};
+try {
+  if (localStorage.getItem("skipgc") === "t") markSkipped();
+} catch {}
+skip.addEventListener("click", () => {
+  try {
+    localStorage.setItem("skipgc", "t");
+    markSkipped();
+  } catch {
+    skip.textContent = "Your browser won't let this page remember that.";
+  }
+});
+</script>
+</body>
+</html>

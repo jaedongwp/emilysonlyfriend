@@ -27,6 +27,8 @@ const isInAppBrowser = /Instagram|FBAN|FBAV|FB_IAB|TikTok|musical_ly|BytedanceWe
 const tapAddress = isAndroid && isInAppBrowser ? playAppIntent : storeAddress;
 
 const isTesting = bridgeScript.hasAttribute("data-test-panel") || page.has("debug");
+const isCounting = bridgeScript.hasAttribute("data-count") && !isTesting && !page.has("dry");
+const platform = isAndroid ? "android" : isApple ? "iphone" : "other";
 const logKey = "bridge-log";
 const autoTriedKey = "bridge-auto-tried";
 
@@ -50,6 +52,19 @@ function note(line) {
   entries.push(new Date().toTimeString().slice(0, 8) + "  " + line);
   store(logKey, entries);
   showLog();
+}
+
+function startCounting() {
+  window.goatcounter = { path: location.pathname, referrer: source };
+  const counter = document.createElement("script");
+  counter.async = true;
+  counter.src = "https://gc.zgo.at/count.js";
+  counter.dataset.goatcounter = "https://emilysonlyfriend.goatcounter.com/count";
+  document.head.appendChild(counter);
+}
+
+function count(action) {
+  if (isCounting && window.goatcounter.count) window.goatcounter.count({ path: action + "-" + source + "-" + platform, event: true });
 }
 
 function whenReady(then) {
@@ -113,6 +128,7 @@ function openPlayOnAnyTap() {
   document.addEventListener("click", (event) => {
     if (event.target.closest("a, button, #test-panel")) return;
     note("tap on the page: " + (isAndroid && isInAppBrowser ? routes[0].name : routes[4].name));
+    count("tap");
     if (!page.has("dry")) location.href = tapAddress;
     whenStillHereAfter(1500, () => note("tap on the page: nothing happened"));
   });
@@ -124,6 +140,7 @@ function wireStoreLinks() {
     link.href = tapAddress;
     link.addEventListener("click", () => {
       note("tap on " + (link.id || "a store link"));
+      count("tap");
       whenStillHereAfter(1800, () => {
         note("tap on " + (link.id || "a store link") + ": nothing happened");
         if (isAndroid) showEscapeLoudly();
@@ -132,7 +149,10 @@ function wireStoreLinks() {
   });
   const chrome = document.getElementById("chrome");
   chrome.href = chromeIntent;
-  chrome.addEventListener("click", () => note("tap on Open in Chrome"));
+  chrome.addEventListener("click", () => {
+    note("tap on Open in Chrome");
+    count("chrome");
+  });
 }
 
 function showPlatformLines() {
@@ -195,4 +215,5 @@ whenReady(() => {
   if (isTesting) buildTestPanel();
 });
 
+if (isCounting) startCounting();
 if (bridgeScript.hasAttribute("data-leave-for-play-on-load")) leaveForPlayOnLoad();
