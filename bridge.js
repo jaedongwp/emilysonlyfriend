@@ -11,6 +11,7 @@ const chromeIntent = "intent://" + location.host + location.pathname + "?s=" + e
 
 const agent = navigator.userAgent;
 const isAndroid = /Android/i.test(agent);
+const isApple = /iPhone|iPad|iPod/i.test(agent) || (/Macintosh/i.test(agent) && navigator.maxTouchPoints > 1);
 const isInAppBrowser = /Instagram|FBAN|FBAV|FB_IAB|TikTok|musical_ly|BytedanceWebview|; wv\)/i.test(agent);
 
 const escape = document.getElementById("escape");
@@ -54,8 +55,13 @@ function openWithoutLeavingThePage(address) {
 }
 
 function leaveForPlayOnLoad() {
-  if (!isAndroid) return;
+  if (page.has("stay") || isApple) return;
   if (leaving) leaving.style.display = "block";
+  if (!isAndroid) {
+    note("a computer: Play's website");
+    location.replace(storeAddress);
+    return;
+  }
   if (!isInAppBrowser) {
     note("Android browser: straight to the Play app");
     location.replace(playAppIntent);
