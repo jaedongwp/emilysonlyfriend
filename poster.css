@@ -1,0 +1,151 @@
+@font-face {
+  font-family: Kalam;
+  font-weight: 700;
+  font-display: block;
+  src: url("fonts/kalam-700-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: Montserrat;
+  font-weight: 500 600;
+  font-display: swap;
+  src: url("fonts/montserrat-latin.woff2") format("woff2");
+}
+:root {
+  --night: #03050f;
+  --cream: #f3e6c8;
+  --soft: rgba(233, 236, 245, 0.74);
+  --faint: rgba(233, 236, 245, 0.5);
+  --ember: #f2b05e;
+  --rise: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+body {
+  background: var(--night);
+  overflow-x: hidden;
+}
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+main {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 0 0 max(18px, env(safe-area-inset-bottom));
+}
+.art {
+  position: relative;
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 36dvh;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+}
+.art::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("poster.jpg") 50% 44% / cover no-repeat;
+  transform-origin: 46% 40%;
+  animation: settle 14s var(--rise) both;
+}
+.pitch {
+  position: relative;
+  width: 100%;
+  margin-top: clamp(-120px, -9dvh, -40px);
+  padding: 0 20px;
+}
+.pitch > * { animation: rise 0.9s var(--rise) both; }
+.pitch > :nth-child(2) { animation-delay: 0.12s; }
+.pitch > :nth-child(3) { animation-delay: 0.22s; }
+.pitch > :nth-child(4) { animation-delay: 0.32s; }
+.pitch > :nth-child(n+5) { animation-delay: 0.42s; }
+h1 {
+  margin: 0;
+  font-size: clamp(40px, min(14vw, 7.4dvh), 64px);
+  line-height: 0.98;
+  letter-spacing: 0.005em;
+  text-shadow: 0 2px 28px rgba(3, 5, 15, 0.85), 0 0 46px rgba(242, 176, 94, 0.16);
+}
+.logline {
+  max-width: 27ch;
+  margin: clamp(10px, 1.8dvh, 16px) auto 0;
+  font-size: clamp(13px, 1.95dvh, 15.5px);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--soft);
+  text-wrap: balance;
+}
+.gift {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 318px;
+  margin: clamp(14px, 3dvh, 28px) auto 0;
+  text-align: left;
+}
+.gift img {
+  flex: none;
+  width: auto;
+  height: clamp(46px, 7.6dvh, 66px);
+  filter: drop-shadow(0 0 14px rgba(242, 176, 94, 0.32));
+}
+.gift p {
+  margin: 0;
+  font-size: clamp(12px, 1.75dvh, 13.5px);
+  line-height: 1.45;
+  color: var(--faint);
+}
+.gift strong {
+  display: block;
+  font-size: clamp(13.5px, 2dvh, 15.5px);
+  font-weight: 600;
+  color: var(--ember);
+}
+.badge {
+  width: min(232px, 64vw, 27dvh);
+  margin: clamp(12px, 2.4dvh, 22px) auto 0;
+  filter: drop-shadow(0 8px 22px rgba(0, 0, 0, 0.55));
+  transition: transform 0.18s ease;
+}
+.badge::before { display: none; }
+.badge:active { transform: scale(0.97); }
+.badge:active img { transform: none; }
+.android-only, .escape {
+  font-size: 12.5px;
+  color: var(--faint);
+}
+.escape { margin-top: clamp(10px, 2dvh, 18px); }
+.escape a { color: var(--soft); font-weight: 500; }
+@media (min-width: 560px) {
+  body::before {
+    content: "";
+    position: fixed;
+    inset: -40px;
+    background: url("poster.jpg") center / cover no-repeat;
+    filter: blur(36px) brightness(0.35);
+  }
+  .art {
+    -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%), linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to bottom, #000 72%, transparent 100%), linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
+    mask-composite: intersect;
+  }
+}
+@keyframes settle {
+  from { transform: scale(1.07); opacity: 0; }
+  12% { opacity: 1; }
+  to { transform: scale(1); opacity: 1; }
+}
+@keyframes rise {
+  from { transform: translateY(14px); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .art::before, .pitch > * { animation: none; }
+}
